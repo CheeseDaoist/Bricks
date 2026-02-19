@@ -1,10 +1,13 @@
+import ToDoList from '@/components/features/todolist';
 import DefaultContainer from '@/components/ui/container';
 import { StyleSheet, View } from 'react-native';
 
 export default function HomeScreen() {
   return (
     <View style={styles.home}>
-      <DefaultContainer/>
+      <DefaultContainer>
+        <ToDoList></ToDoList>
+      </DefaultContainer>
     </View>
   );
 }

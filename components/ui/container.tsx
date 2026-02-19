@@ -7,9 +7,9 @@ interface ContainerProps {
 export default function DefaultContainer({children, style}:ContainerProps) {
     return (
         <View style={[Styles.container, style]}>
-            <View style={{backgroundColor: "red", width: '100%', height: 80,  display: 'flex'}}>
-                <View style={{height: '100%', width: '30%', backgroundColor: 'white'}}>
-
+            <View style={{width: '100%', height: 56,  display: 'flex'}}>
+                <View style={{height: '100%', width: '100%'}}>
+                    <h1>Bricks</h1>
                 </View>
             </View>
             <View>
@@ -22,7 +22,7 @@ export default function DefaultContainer({children, style}:ContainerProps) {
 const Styles = StyleSheet.create({
     container:{
         height:800,
-        width: 500,
+        width: 412,
         // backgroundColor: "blue",
         display: 'flex',
         alignSelf: 'center',
@@ -30,6 +30,7 @@ const Styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 1,
-        borderRadius: 20
+        borderRadius: 20,
+        gap: 12
         }
 })
