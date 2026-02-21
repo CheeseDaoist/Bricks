@@ -26,7 +26,7 @@ const Styles = StyleSheet.create({
         // backgroundColor: "blue",
         display: 'flex',
         alignSelf: 'center',
-        padding: 20,
+        // padding: 20,
         borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 1,
