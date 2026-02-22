@@ -1,4 +1,4 @@
-import ToDoList from '@/components/features/todolist';
+import ToDoList from '@/components/features/todolist/todolist';
 import DefaultContainer from '@/components/ui/container';
 import { StyleSheet, View } from 'react-native';
 
