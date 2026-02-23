@@ -9,7 +9,6 @@ export default function DefaultContainer({children, style}:ContainerProps) {
         <View style={[Styles.container, style]}>
             <View style={{width: '100%', height: 56,  display: 'flex'}}>
                 <View style={{height: '100%', width: '100%'}}>
-                    <h1>Bricks</h1>
                 </View>
             </View>
             <View>
@@ -31,6 +30,7 @@ const Styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 20,
-        gap: 12
+        gap: 12,
+        backgroundColor: 'white'
         }
 })

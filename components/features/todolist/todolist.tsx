@@ -1,28 +1,58 @@
+import { Button, Icon, InputItem, List, Modal } from "@ant-design/react-native";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ToDoEntry } from './todoentry';
 export default function ToDoList(){
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    function onAddingEntry(){
+
+    }
+
     return(
     <View style={styles.toDoContainer}>
-        <View>
-            <h1>ToDo</h1>
-        </View>
-        <View style={{display: 'flex', gap:10}}>
-            <ToDoEntry text="klein"/>
+        <View style={{display: 'flex', gap:10, marginBottom: 10}}>
             <ToDoEntry text="sample" />     
         </View>
+        <View style={{alignItems:'center'}}>
+            <Button onPress={()=>setIsModalVisible(true)} style={{width:40, height: 40, borderRadius: 50}}>
+                <Icon name="plus" color="black"/>
+            </Button>
+        </View>
+
+        <Modal  visible={isModalVisible} 
+                onClose={()=>setIsModalVisible(false)} 
+                transparent
+                footer={[
+                    {text: "Cancel", onPress: () => setIsModalVisible(false)},
+                    {text: "Add", onPress: () => onAddingEntry},
+        ]}>
+            <List>
+                <InputItem>
+                </InputItem>
+            </List>
+        </Modal>
     </View>
     )
 }
 const styles = StyleSheet.create({
     toDoContainer:{
-        width: '100%',
-        height: 400,
-        // borderColor: 'black',
-        // borderWidth: 1,
-        // borderRadius: 20,
+        width: '90%',
+        height: 300,
         padding: 12,
         display: 'flex',
-        // backgroundColor: 'black',
+        alignSelf: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
+        borderRadius: 20,
+        justifyContent: 'space-around'
+
     },
     entry:{
         width: "95%",

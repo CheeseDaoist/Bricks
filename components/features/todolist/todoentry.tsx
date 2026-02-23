@@ -1,25 +1,26 @@
-import { Button } from "@ant-design/react-native";
-import { StyleSheet, View } from "react-native";
+import { Checkbox, List } from "@ant-design/react-native";
+import { useState } from "react";
+import { StyleSheet } from "react-native";
 
 interface ToDoEntryProps {
     text: string;
 }
 export function ToDoEntry({text}:ToDoEntryProps) {
+    const [checked, setChecked] = useState(false);
+    function RemoveEntry(){
+        //for removing entry
+    }
+
     return(
-        <View style={styles.entry}>
-                <View style={{height: '100%', width: 40, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    {/* checkbox button */}
-                    <Button style={{height: 20, width: 20}}>
-                    </Button>
-                </View>
-                <View style={{height:'100%', width:250}}>
-                        <p>{text} </p>
-                    
-                </View>
-                <View>
-                    {/* Options */}
-                </View>
-            </View>
+        <List.Item  thumb={<Checkbox checked={checked} 
+                        onChange={(e) => setChecked(e.target.checked)} 
+                        />}
+                    styles={{
+                        Line: { borderBottomWidth: 0 }, 
+                        }}
+        >
+            {text}
+        </List.Item>
     )
 }
 
