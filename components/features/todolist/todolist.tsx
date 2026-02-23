@@ -4,15 +4,31 @@ import { StyleSheet, View } from "react-native";
 import { ToDoEntry } from './todoentry';
 export default function ToDoList(){
     const [isModalVisible, setIsModalVisible] = useState(false);
-
+    const [taskName, setTaskName] = useState("");
+    const [taskList, setTaskList] = useState<{id: string, text: string}[]>([]);
     function onAddingEntry(){
+        if (taskName.trim().length === 0) return;
 
+        const newEntry = {
+            id: Date.now().toString(),
+            text: taskName
+        }
+
+        setTaskList([...taskList, newEntry]);
+        setTaskName("");
+        setIsModalVisible(false);
+        debugger;
     }
 
     return(
     <View style={styles.toDoContainer}>
         <View style={{display: 'flex', gap:10, marginBottom: 10}}>
-            <ToDoEntry text="sample" />     
+            {/* <ToDoEntry text="sample" />      */}
+            {
+                taskList.map((item) => (
+                    <ToDoEntry text = {item.text} />
+                ))
+            }
         </View>
         <View style={{alignItems:'center'}}>
             <Button onPress={()=>setIsModalVisible(true)} style={{width:40, height: 40, borderRadius: 50}}>
@@ -25,10 +41,13 @@ export default function ToDoList(){
                 transparent
                 footer={[
                     {text: "Cancel", onPress: () => setIsModalVisible(false)},
-                    {text: "Add", onPress: () => onAddingEntry},
+                    {text: "Add", onPress: onAddingEntry},
         ]}>
             <List>
-                <InputItem>
+                <InputItem  clear
+                            value={taskName} // why is the bottom needed? isnt this automatic?
+                            onChange={(value) => setTaskName(value)}
+                            placeholder="What needs to be done?">
                 </InputItem>
             </List>
         </Modal>
