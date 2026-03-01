@@ -1,41 +1,45 @@
 import { Button, Icon, InputItem, List, Modal } from "@ant-design/react-native";
+import * as SQLite from 'expo-sqlite';
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ToDoEntry } from './todoentry';
+const db = SQLite.openDatabaseSync('todo_db');
 
 export default function ToDoList() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [taskName, setTaskName] = useState("");
-    const [taskList, setTaskList] = useState<{ id: string, text: string }[]>([]);
+    const [taskList, setTaskList] = useState<{id: number, text: string }[]>([]);
 
-    // LOAD DATA: When the page opens, grab data from browser memory
     useEffect(() => {
-        const savedData = localStorage.getItem('my_todos');
-        if (savedData) {
-            setTaskList(JSON.parse(savedData));
-        }
+        db.execSync(`
+            CREATE TABLE IF NOT EXISTS todos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                text TEXT NOT NULL
+            );
+        `);
+        fetchTasks();
+        
     }, []);
 
-    // SAVE DATA: Every time the list changes, update browser memory
-    useEffect(() => {
-        localStorage.setItem('my_todos', JSON.stringify(taskList));
-    }, [taskList]);
+    const fetchTasks = () => {
+        const allRows = db.getAllSync('SELECT * FROM todos') as {id: number, text:string }[];
+        setTaskList(allRows);
+    }
+
 
     function onAddingEntry() {
         if (taskName.trim().length === 0) return;
 
-        const newEntry = { 
-            id: Date.now().toString(), 
-            text: taskName 
-        };
+        db.runSync('INSERT INTO todos (text) VALUES(?)', taskName);
 
-        setTaskList([...taskList, newEntry]);
         setTaskName("");
         setIsModalVisible(false);
+        fetchTasks();
     }
 
-    const deleteEntry = (id: string) => {
-        setTaskList(taskList.filter(item => item.id !== id));
+    const deleteEntry = (id: Number) => {
+        db.runSync('DELETE FROM todos WHERE id = ?', id + "");
+        fetchTasks();
     };
 
     return (
@@ -43,9 +47,10 @@ export default function ToDoList() {
             <View style={{ gap: 10, marginBottom: 20 }}>
                 {taskList.map((item) => (
                     <ToDoEntry 
-                        key={item.id} 
+                        key={item.id.toString()} 
+                        id={item.id.toString()}
                         text={item.text} 
-                        // onDelete={() => deleteEntry(item.id)} 
+                        onDelete={() => deleteEntry(item.id)} 
                     />
                 ))}
             </View>

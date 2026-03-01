@@ -3,18 +3,20 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 interface ToDoEntryProps {
+    id: string;
     text: string;
+    onDelete: (id: string) => void;
 }
-export function ToDoEntry({text}:ToDoEntryProps) {
+export function ToDoEntry({text, onDelete, id}:ToDoEntryProps) {
     const [checked, setChecked] = useState(false);
-    function RemoveEntry(){
-        //for removing entry
-    }
 
     return(
-        <List.Item  thumb={<Checkbox checked={checked} 
-                        onChange={(e) => setChecked(e.target.checked)} 
-                        />}
+        <List.Item  thumb={<Checkbox    checked={checked} 
+                                        onChange={(e) => { 
+                                                            setChecked(e.target.checked);
+                                                            onDelete(id);
+                                        }} 
+                            />}
                     styles={{
                         Line: { borderBottomWidth: 0 }, 
                         }}
